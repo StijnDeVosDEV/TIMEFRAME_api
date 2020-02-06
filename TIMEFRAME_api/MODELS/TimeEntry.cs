@@ -1,0 +1,16 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace TIMEFRAME_api.MODELS
+{
+    public class TimeEntry
+    {
+        public int Id { get; set; }
+        public DateTime Start { get; set; }
+        public DateTime Stop { get; set; }
+        public DateTime Date { get; set; }
+        public DateTime CreationDate { get; set; }
+    }
+}
