@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29001.49
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TIMEFRAME_api", "TIMEFRAME_api\TIMEFRAME_api.csproj", "{B1E4EA41-EF20-4F11-BB31-6AD2FAA6E3E3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TIMEFRAME_app", "TIMEFRAME_app\TIMEFRAME_app.csproj", "{E47B4BCC-3D6E-43B2-BC35-51CFB2FB199A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TIMEFRAME_app", "TIMEFRAME_app\TIMEFRAME_app.csproj", "{E47B4BCC-3D6E-43B2-BC35-51CFB2FB199A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
