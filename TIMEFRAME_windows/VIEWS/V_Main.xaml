@@ -16,8 +16,8 @@
                 <ColumnDefinition Width="150"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <StackPanel x:Name="StackPanel_Logo_User">
-                <Image x:Name="Img_Logo" Height="100" Width="100" Source="/TIMEFRAME_windows;component/IMAGES/Task2.png"/>
+            <StackPanel x:Name="StackPanel_Logo_User" VerticalAlignment="Center">
+                <Image x:Name="Img_Logo" Height="100" Width="100" Source="/IMAGES/TimeFrame__Logo.png"/>
                 <Grid x:Name="Grid_User">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="45"/>
@@ -27,6 +27,58 @@
                     <Label Content="&lt;username&gt;" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Cursor="Hand"/>
                 </Grid>
             </StackPanel>
+            <Grid x:Name="Grid_Record" Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <StackPanel x:Name="StackPanel_RecordSettings" VerticalAlignment="Center" Margin="20,0,0,0">
+                    <ComboBox x:Name="Combo_Customer" Margin="0,0,0,10" Text="Customer..." Background="{x:Null}"/>
+                    <ComboBox x:Name="Combo_Project" Margin="0,0,0,10" Background="{x:Null}"/>
+                    <ComboBox x:Name="Combo_Task" Background="{x:Null}"/>
+                </StackPanel>
+                <StackPanel x:Name="StackPanel_Buttons" Grid.Column="1" FlowDirection="LeftToRight" Orientation="Horizontal">
+                    <StackPanel x:Name="StackPanel_Play" Width="100" FlowDirection="LeftToRight" VerticalAlignment="Center" Margin="20,0,0,0">
+                        <Image x:Name="Img_Play" Height="100" Width="100" Source="/IMAGES/Play.png" Cursor="Hand"/>
+                        <Label x:Name="Label_PlayTime" Content="&lt;hh:mm&gt;" HorizontalContentAlignment="Center"/>
+                    </StackPanel>
+                    <StackPanel x:Name="StackPanel_Stop" Width="100" VerticalAlignment="Center" Margin="20,0,0,0">
+                        <Image x:Name="Img_Stopo" Height="100" Width="100" Source="/IMAGES/Stop.jpg" Cursor="Hand"/>
+                        <Label x:Name="Label_StopTime" Content="&lt;hh:mm&gt;" HorizontalContentAlignment="Center"/>
+                    </StackPanel>
+                    <StackPanel x:Name="StackPanel_TimeEntry" Margin="20,0,0,0" VerticalAlignment="Center">
+                        <StackPanel x:Name="StackPanel_Duration" Orientation="Horizontal">
+                            <Image x:Name="Img_TimeEntryLogo" Height="30" Source="/IMAGES/TimeFrame__TimeEntry.png"/>
+                            <Label x:Name="Label_Duration" Content=".. h  .. m  .. s" FontWeight="Bold" FontSize="14" VerticalAlignment="Center" Cursor="Hand"/>
+                        </StackPanel>
+                        <StackPanel x:Name="StackPanel_Save_Delete" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">
+                            <Image x:Name="Img_Save" Height="50" Source="/IMAGES/Save.png" Cursor="Hand"/>
+                            <Image x:Name="Img_Delete" Height="50" Source="/IMAGES/Remove_cross_black.png" Cursor="Hand"/>
+                        </StackPanel>
+                    </StackPanel>
+                    <Grid x:Name="Grid_ExtraButtons">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Image x:Name="Img_Expand2" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch" Width="25" Source="/IMAGES/SortArrowUP_black.png" Cursor="Hand"/>
+                    </Grid>
+                </StackPanel>
+                <Border x:Name="Border_Divider" BorderThickness="1" BorderBrush="Black" Width="1" HorizontalAlignment="Left"/>
+            </Grid>
+        </Grid>
+        <Grid x:Name="Grid_Content" Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="40"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Border x:Name="Border_Top" BorderThickness="1" BorderBrush="Black" Grid.ColumnSpan="2" Height="1" VerticalAlignment="Top"/>
+            <StackPanel x:Name="StackPanel_ContentButtons" Margin="0,10,0,0">
+                <Image x:Name="Img_Configuration" Source="/IMAGES/Database_Black.png" Cursor="Hand"/>
+                <Image x:Name="Img_Reports" Source="/IMAGES/Statistics_DarkBlue.png" Cursor="Hand"/>
+                <Image x:Name="Img_Settings" Source="/IMAGES/Settings_black.PNG" Cursor="Hand"/>
+            </StackPanel>
+            <Border BorderThickness="1" BorderBrush="Black" Width="1" HorizontalAlignment="Right"/>
         </Grid>
 
     </Grid>
