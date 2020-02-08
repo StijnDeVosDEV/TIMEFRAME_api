@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
+using TIMEFRAME_windows.MODELS;
 using TIMEFRAME_windows.SERVICES;
 
 namespace TIMEFRAME_windows.VIEWMODELS
@@ -11,7 +13,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
         //  Private variable declarations
         //  -----------------------------
         // UI related
-
+        private ObservableCollection<Customer> _allCustomers;
 
         // Commands
         
@@ -47,7 +49,11 @@ namespace TIMEFRAME_windows.VIEWMODELS
         // Public variable declarations
         // ----------------------------
         #region PROPERTIES
-
+        public ObservableCollection<Customer> allCustomers
+        {
+            get { return _allCustomers; }
+            set { if (value != _allCustomers) { _allCustomers = value; RaisePropertyChangedEvent("allCustomers"); } }
+        }
         #endregion
 
 
