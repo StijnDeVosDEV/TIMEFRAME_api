@@ -28,6 +28,16 @@ namespace TIMEFRAME_windows.VIEWS
         private static bool IsActive_Reports = false;
         private static bool IsActive_Settings = false;
 
+        private static ConfigBlocks Config_ActiveState; 
+
+        enum ConfigBlocks
+        {
+            Customers,
+            Projects,
+            Tasks,
+            TimeEntries
+        }
+
         // CONSTRUCTOR
         public V_Main()
         {
@@ -44,6 +54,14 @@ namespace TIMEFRAME_windows.VIEWS
             IsActive_Settings = false;
 
             Img_Configuration.Source = new BitmapImage(new Uri("pack://application:,,,/TIMEFRAME_windows;component/IMAGES/Database_White.png"));
+
+            Grid_ConfigCustomers.Visibility = Visibility.Visible;
+            Grid_ConfigProjects.Visibility = Visibility.Hidden;
+            Grid_ConfigTasks.Visibility = Visibility.Hidden;
+            Grid_ConfigTimeEntries.Visibility = Visibility.Hidden;
+
+            Config_ActiveState = ConfigBlocks.Customers;
+            StackPanel_Config_Customer.Background = highlightColor_SecondMenu;
         }
 
         private void StackPanel_Config_Customer_MouseEnter(object sender, MouseEventArgs e)
@@ -53,7 +71,10 @@ namespace TIMEFRAME_windows.VIEWS
 
         private void StackPanel_Config_Customer_MouseLeave(object sender, MouseEventArgs e)
         {
-            StackPanel_Config_Customer.Background = highlightColor_Transparent;
+            if (Config_ActiveState != ConfigBlocks.Customers)
+            {
+                StackPanel_Config_Customer.Background = highlightColor_Transparent;
+            }
         }
 
         private void StackPanel_Config_Project_MouseEnter(object sender, MouseEventArgs e)
@@ -63,7 +84,10 @@ namespace TIMEFRAME_windows.VIEWS
 
         private void StackPanel_Config_Project_MouseLeave(object sender, MouseEventArgs e)
         {
-            StackPanel_Config_Project.Background = highlightColor_Transparent;
+            if (Config_ActiveState != ConfigBlocks.Projects)
+            {
+                StackPanel_Config_Project.Background = highlightColor_Transparent;
+            }
         }
 
         private void StackPanel_Config_Task_MouseEnter(object sender, MouseEventArgs e)
@@ -73,7 +97,10 @@ namespace TIMEFRAME_windows.VIEWS
 
         private void StackPanel_Config_Task_MouseLeave(object sender, MouseEventArgs e)
         {
-            StackPanel_Config_Task.Background = highlightColor_Transparent;
+            if (Config_ActiveState != ConfigBlocks.Tasks)
+            {
+                StackPanel_Config_Task.Background = highlightColor_Transparent;
+            }
         }
 
         private void StackPanel_Config_TimeEntry_MouseEnter(object sender, MouseEventArgs e)
@@ -83,7 +110,10 @@ namespace TIMEFRAME_windows.VIEWS
 
         private void StackPanel_Config_TimeEntry_MouseLeave(object sender, MouseEventArgs e)
         {
-            StackPanel_Config_TimeEntry.Background = highlightColor_Transparent;
+            if (Config_ActiveState != ConfigBlocks.TimeEntries)
+            {
+                StackPanel_Config_TimeEntry.Background = highlightColor_Transparent;
+            }
         }
 
         private void Img_Expand2_MouseDown(object sender, MouseButtonEventArgs e)
@@ -233,6 +263,62 @@ namespace TIMEFRAME_windows.VIEWS
         private void StackPanel_TotalsButton_MouseLeave(object sender, MouseEventArgs e)
         {
             StackPanel_TotalsButton.Background = highlightColor_Transparent;
+        }
+
+        private void StackPanel_Config_Customer_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Config_ActiveState = ConfigBlocks.Customers;
+
+            Grid_ConfigCustomers.Visibility = Visibility.Visible;
+            Grid_ConfigProjects.Visibility = Visibility.Hidden;
+            Grid_ConfigTasks.Visibility = Visibility.Hidden;
+            Grid_ConfigTimeEntries.Visibility = Visibility.Hidden;
+
+            StackPanel_Config_Project.Background = highlightColor_Transparent;
+            StackPanel_Config_Task.Background = highlightColor_Transparent;
+            StackPanel_Config_TimeEntry.Background = highlightColor_Transparent;
+        }
+
+        private void StackPanel_Config_Project_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Config_ActiveState = ConfigBlocks.Projects;
+
+            Grid_ConfigCustomers.Visibility = Visibility.Hidden;
+            Grid_ConfigProjects.Visibility = Visibility.Visible;
+            Grid_ConfigTasks.Visibility = Visibility.Hidden;
+            Grid_ConfigTimeEntries.Visibility = Visibility.Hidden;
+
+            StackPanel_Config_Customer.Background = highlightColor_Transparent;
+            StackPanel_Config_Task.Background = highlightColor_Transparent;
+            StackPanel_Config_TimeEntry.Background = highlightColor_Transparent;
+        }
+
+        private void StackPanel_Config_Task_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Config_ActiveState = ConfigBlocks.Tasks;
+
+            Grid_ConfigCustomers.Visibility = Visibility.Hidden;
+            Grid_ConfigProjects.Visibility = Visibility.Hidden;
+            Grid_ConfigTasks.Visibility = Visibility.Visible;
+            Grid_ConfigTimeEntries.Visibility = Visibility.Hidden;
+
+            StackPanel_Config_Customer.Background = highlightColor_Transparent;
+            StackPanel_Config_Project.Background = highlightColor_Transparent;
+            StackPanel_Config_TimeEntry.Background = highlightColor_Transparent;
+        }
+
+        private void StackPanel_Config_TimeEntry_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Config_ActiveState = ConfigBlocks.TimeEntries;
+
+            Grid_ConfigCustomers.Visibility = Visibility.Hidden;
+            Grid_ConfigProjects.Visibility = Visibility.Hidden;
+            Grid_ConfigTasks.Visibility = Visibility.Hidden;
+            Grid_ConfigTimeEntries.Visibility = Visibility.Visible;
+
+            StackPanel_Config_Customer.Background = highlightColor_Transparent;
+            StackPanel_Config_Project.Background = highlightColor_Transparent;
+            StackPanel_Config_Task.Background = highlightColor_Transparent;
         }
     }
 }

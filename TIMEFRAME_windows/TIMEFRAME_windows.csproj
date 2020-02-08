@@ -17,6 +17,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="IMAGES\Add_Simple_black.png" />
     <None Remove="IMAGES\Database_Black.png" />
     <None Remove="IMAGES\Database_White.png" />
     <None Remove="IMAGES\EditButton_Black.png" />
@@ -55,6 +56,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="IMAGES\Add_Simple_black.png" />
     <Resource Include="IMAGES\Database_Black.png" />
     <Resource Include="IMAGES\Database_White.png" />
     <Resource Include="IMAGES\EditButton_Black.png" />
