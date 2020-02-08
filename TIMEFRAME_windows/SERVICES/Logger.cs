@@ -88,5 +88,14 @@ namespace TIMEFRAME_windows.SERVICES
                 Console.WriteLine("Log file saved to: " + logPath);
             }
         }
+
+        /// <summary>
+        /// Returns current content of log file
+        /// </summary>
+        /// <returns></returns>
+        public static string GetLogContent()
+        {
+            return logContent;
+        }
     }
 }

@@ -24,10 +24,26 @@ namespace TIMEFRAME_windows.VIEWS
 
         private static double OrigHeight = 0.0;
 
+        private static bool IsActive_Configuration = true;
+        private static bool IsActive_Reports = false;
+        private static bool IsActive_Settings = false;
+
         // CONSTRUCTOR
         public V_Main()
         {
             InitializeComponent();
+
+
+            // Initialize Content area
+            Grid_Configuration.Visibility = Visibility.Visible;
+            Grid_Reports.Visibility = Visibility.Hidden;
+            Grid_Settings.Visibility = Visibility.Hidden;
+
+            IsActive_Configuration = true;
+            IsActive_Reports = false;
+            IsActive_Settings = false;
+
+            Img_Configuration.Source = new BitmapImage(new Uri("pack://application:,,,/TIMEFRAME_windows;component/IMAGES/Database_White.png"));
         }
 
         private void StackPanel_Config_Customer_MouseEnter(object sender, MouseEventArgs e)
@@ -72,18 +88,151 @@ namespace TIMEFRAME_windows.VIEWS
 
         private void Img_Expand2_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (Grid_Content.Height > 0)
+            if (Grid_Content.Visibility == Visibility.Visible)
             {
-                OrigHeight = Grid_Content.Height;
-                Grid_Content.Height = 0;
-                
-                //Img_Expand2.Source = new BitmapImage(new Uri("pack://application:,,,/TIMEFRAME_windows;component/IMAGES/SortArrowDOWN_Black.png"));
+                Grid_Content.Visibility = Visibility.Collapsed;
+                Img_Expand2.Source = new BitmapImage(new Uri("pack://application:,,,/TIMEFRAME_windows;component/IMAGES/SortArrowDOWN_Black.png"));
+
+                OrigHeight = V_Main1.Height;
+                V_Main1.Height = Grid_Core.Height + 35;
             }
             else
             {
-                Grid_Content.Height = OrigHeight;
-                //Img_Expand2.Source = new BitmapImage(new Uri("pack://application:,,,/TIMEFRAME_windows;component/IMAGES/SortArrowUP_Black.png"));
+                Grid_Content.Visibility = Visibility.Visible;
+                Img_Expand2.Source = new BitmapImage(new Uri("pack://application:,,,/TIMEFRAME_windows;component/IMAGES/SortArrowUP_Black.png"));
+
+                V_Main1.Height = OrigHeight;
             }
+
+            //if (Grid_Content.Height > 0)
+            //{
+            //    OrigHeight = Grid_Content.Height;
+            //    Grid_Content.Height = 0;
+                
+            //    //Img_Expand2.Source = new BitmapImage(new Uri("pack://application:,,,/TIMEFRAME_windows;component/IMAGES/SortArrowDOWN_Black.png"));
+            //}
+            //else
+            //{
+            //    Grid_Content.Height = OrigHeight;
+            //    //Img_Expand2.Source = new BitmapImage(new Uri("pack://application:,,,/TIMEFRAME_windows;component/IMAGES/SortArrowUP_Black.png"));
+            //}
+        }
+
+        private void StackPanel_LogFileButton_MouseEnter(object sender, MouseEventArgs e)
+        {
+            StackPanel_LogFileButton.Background = highlightColor_SecondMenu;
+        }
+
+        private void StackPanel_LogFileButton_MouseLeave(object sender, MouseEventArgs e)
+        {
+            StackPanel_LogFileButton.Background = highlightColor_Transparent;
+        }
+
+        private void Img_Configuration_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Grid_Configuration.Visibility = Visibility.Visible;
+            Grid_Reports.Visibility = Visibility.Hidden;
+            Grid_Settings.Visibility = Visibility.Hidden;
+
+            IsActive_Configuration = true;
+            IsActive_Reports = false;
+            IsActive_Settings = false;
+
+            Img_Reports.Source = new BitmapImage(new Uri("pack://application:,,,/TIMEFRAME_windows;component/IMAGES/Statistics_Black.png"));
+            Img_Settings.Source = new BitmapImage(new Uri("pack://application:,,,/TIMEFRAME_windows;component/IMAGES/Settings_black.PNG"));
+        }
+
+        private void Img_Reports_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Grid_Configuration.Visibility = Visibility.Hidden;
+            Grid_Reports.Visibility = Visibility.Visible;
+            Grid_Settings.Visibility = Visibility.Hidden;
+
+            IsActive_Configuration = false;
+            IsActive_Reports = true;
+            IsActive_Settings = false;
+
+            Img_Configuration.Source = new BitmapImage(new Uri("pack://application:,,,/TIMEFRAME_windows;component/IMAGES/Database_Black.png"));
+            Img_Settings.Source = new BitmapImage(new Uri("pack://application:,,,/TIMEFRAME_windows;component/IMAGES/Settings_black.PNG"));
+        }
+
+        private void Img_Settings_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Grid_Configuration.Visibility = Visibility.Hidden;
+            Grid_Reports.Visibility = Visibility.Hidden;
+            Grid_Settings.Visibility = Visibility.Visible;
+
+            IsActive_Configuration = false;
+            IsActive_Reports = false;
+            IsActive_Settings = true;
+
+            Img_Configuration.Source = new BitmapImage(new Uri("pack://application:,,,/TIMEFRAME_windows;component/IMAGES/Database_Black.png"));
+            Img_Reports.Source = new BitmapImage(new Uri("pack://application:,,,/TIMEFRAME_windows;component/IMAGES/Statistics_Black.png"));
+        }
+
+        private void Img_Configuration_MouseEnter(object sender, MouseEventArgs e)
+        {
+            Img_Configuration.Source = new BitmapImage(new Uri("pack://application:,,,/TIMEFRAME_windows;component/IMAGES/Database_White.png"));
+        }
+
+        private void Img_Configuration_MouseLeave(object sender, MouseEventArgs e)
+        {
+            if (!IsActive_Configuration)
+            {
+                Img_Configuration.Source = new BitmapImage(new Uri("pack://application:,,,/TIMEFRAME_windows;component/IMAGES/Database_Black.png"));
+            }
+        }
+
+        private void Img_Reports_MouseEnter(object sender, MouseEventArgs e)
+        {
+            Img_Reports.Source = new BitmapImage(new Uri("pack://application:,,,/TIMEFRAME_windows;component/IMAGES/Statistics_White.png"));
+        }
+
+        private void Img_Reports_MouseLeave(object sender, MouseEventArgs e)
+        {
+            if (!IsActive_Reports)
+            {
+                Img_Reports.Source = new BitmapImage(new Uri("pack://application:,,,/TIMEFRAME_windows;component/IMAGES/Statistics_Black.png"));
+            }
+        }
+
+        private void Img_Settings_MouseEnter(object sender, MouseEventArgs e)
+        {
+            Img_Settings.Source = new BitmapImage(new Uri("pack://application:,,,/TIMEFRAME_windows;component/IMAGES/Settings_adj.png"));
+        }
+
+        private void Img_Settings_MouseLeave(object sender, MouseEventArgs e)
+        {
+            if (!IsActive_Settings)
+            {
+                Img_Settings.Source = new BitmapImage(new Uri("pack://application:,,,/TIMEFRAME_windows;component/IMAGES/Settings_black.PNG"));
+            }
+        }
+
+        private void StackPanel_LogFileButton_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            SERVICES.Logger.Write("Getting log content...");
+            TextBlock_LogFile.Text = SERVICES.Logger.GetLogContent();
+        }
+
+        private void StackPanel_OpenAirButton_MouseEnter(object sender, MouseEventArgs e)
+        {
+            StackPanel_OpenAirButton.Background = highlightColor_SecondMenu;
+        }
+
+        private void StackPanel_OpenAirButton_MouseLeave(object sender, MouseEventArgs e)
+        {
+            StackPanel_OpenAirButton.Background = highlightColor_Transparent;
+        }
+
+        private void StackPanel_TotalsButton_MouseEnter(object sender, MouseEventArgs e)
+        {
+            StackPanel_TotalsButton.Background = highlightColor_SecondMenu;
+        }
+
+        private void StackPanel_TotalsButton_MouseLeave(object sender, MouseEventArgs e)
+        {
+            StackPanel_TotalsButton.Background = highlightColor_Transparent;
         }
     }
 }
