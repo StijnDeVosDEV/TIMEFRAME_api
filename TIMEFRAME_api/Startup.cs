@@ -29,8 +29,27 @@ namespace TIMEFRAME_api
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            services.AddDbContext<TimeframeContext>(options =>
+            //services.AddDbContext<TimeframeContext>(options =>
+            //        options.UseSqlServer(Configuration.GetConnectionString("TimeframeContext")));
+
+
+            // Use SQL Database if in Azure, otherwise, use SQLite
+            if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production")
+            {
+                services.AddDbContext<TimeframeContext>(options =>
+                        options.UseSqlServer(Configuration.GetConnectionString("MyDbConnection")));
+            } 
+            else
+            {
+                //services.AddDbContext<TimeframeContext>(options =>
+                //        options.UseSqlServer("Data Source=localdatabase.db"));
+                services.AddDbContext<TimeframeContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("TimeframeContext")));
+            }  
+
+            // Automatically perform database migration
+            services.BuildServiceProvider().GetService<TimeframeContext>().Database.Migrate();
+
 
             services.AddCors(options =>
             {

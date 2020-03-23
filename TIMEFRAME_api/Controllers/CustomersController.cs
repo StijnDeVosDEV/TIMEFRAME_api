@@ -26,6 +26,14 @@ namespace TIMEFRAME_api.Controllers
         public async Task<ActionResult<IEnumerable<Customer>>> GetCustomer()
         {
             return await _context.Customer.ToListAsync();
+            //return new List<Customer>(){new Customer()
+            //{
+            //    Id = 1,
+            //    Name = "DUMMY CUSTOMER",
+            //    Email = "test@test.com",
+            //    Status = "Inactive",
+            //    Surname= "Test"
+            //} };
         }
 
         // GET: api/Customers/5
