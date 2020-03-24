@@ -14,7 +14,15 @@ namespace TIMEFRAME_windows.SERVICES.Interfaces
         #region CRUD - CUSTOMER
         public Task AddCustomer(Customer customer);
 
-        public Task<List<Customer>> Customer_Get();
+        public Task<List<Customer>> GetCustomers();
+        #endregion
+
+        #region PROJECTS
+        // POST Project
+        public Task AddProject(Project project);
+
+        // GET all Customers
+        public Task<List<Project>> GetProjects();
         #endregion
     }
 }

@@ -34,14 +34,14 @@ namespace TIMEFRAME_windows.SERVICES
             client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
         }
 
-        #region CRUD - CUSTOMER
+        #region CUSTOMERS
         // POST 1 Customer
         public async Task AddCustomer(Customer customer)
         {
             try
             {
                 Logger.Write("--- ADDING NEW CUSTOMER ---");
-
+                
                 HttpResponseMessage response = await client.PostAsJsonAsync("api/customers", customer);
             }
             catch (Exception e)
@@ -52,29 +52,22 @@ namespace TIMEFRAME_windows.SERVICES
         }
 
         // GET all Customers
-        public async Task<List<Customer>> Customer_Get()
+        public async Task<List<Customer>> GetCustomers()
         {
-            System.Windows.MessageBox.Show("Entering Customer_Get()");
-
             List<Customer> allCustomers = null;
 
             try
             {
-                Logger.Write("--- GETTING ALL CUSTOMERS ---");
-
                 HttpResponseMessage response = await client.GetAsync(client.BaseAddress + @"api/customers");
 
                 if (response.IsSuccessStatusCode)
                 {
                     allCustomers = await response.Content.ReadAsAsync<List<Customer>>();
-                    System.Windows.MessageBox.Show("SUCCESS:  allCustomer.Count = " + allCustomers.Count.ToString());
                 }
                 else
                 {
                     System.Windows.MessageBox.Show("ERROR:  " + response.StatusCode.ToString());
                 }
-
-                System.Windows.MessageBox.Show("Leaving Customer_Get()");
 
                 return allCustomers;
             }
@@ -82,9 +75,57 @@ namespace TIMEFRAME_windows.SERVICES
             {
                 Logger.Write("!ERROR occurred while getting all customers : " + Environment.NewLine +
                     e.ToString());
-                System.Windows.MessageBox.Show("Leaving Customer_Get() : ERROR: " + Environment.NewLine +
+                System.Windows.MessageBox.Show("Leaving GetCustomers() : ERROR: " + Environment.NewLine +
                     e.ToString());
                 return allCustomers;
+            }
+        }
+        #endregion
+
+        #region PROJECTS
+        // POST Project
+        public async Task AddProject(Project project)
+        {
+            try
+            {
+                Logger.Write("--- ADDING NEW PROJECT ---");
+
+                HttpResponseMessage response = await client.PostAsJsonAsync("api/projects", project);
+            }
+            catch (Exception e)
+            {
+                Logger.Write("!ERROR occurred while adding new project : " + Environment.NewLine +
+                    e.ToString());
+            }
+        }
+        
+        // GET all Customers
+        public async Task<List<Project>> GetProjects()
+        {
+            List<Project> allProjects = null;
+
+            try
+            {
+                HttpResponseMessage response = await client.GetAsync(client.BaseAddress + @"api/projects");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    allProjects = await response.Content.ReadAsAsync<List<Project>>();
+                }
+                else
+                {
+                    System.Windows.MessageBox.Show("ERROR:  " + response.StatusCode.ToString());
+                }
+
+                return allProjects;
+            }
+            catch (Exception e)
+            {
+                Logger.Write("!ERROR occurred while getting all projects : " + Environment.NewLine +
+                    e.ToString());
+                System.Windows.MessageBox.Show("Leaving GetProjects() : ERROR: " + Environment.NewLine +
+                    e.ToString());
+                return allProjects;
             }
         }
         #endregion

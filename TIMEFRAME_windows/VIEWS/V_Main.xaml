@@ -38,11 +38,11 @@
                 </Grid.ColumnDefinitions>
                 <StackPanel x:Name="StackPanel_RecordSettings" VerticalAlignment="Center" Margin="20,0,0,0">
                     <Label Content="Customer" FontSize="9" Padding="5,5,5,1"/>
-                    <ComboBox x:Name="Combo_Customer" Margin="0,0,0,0" Text="Customer..." Background="{x:Null}" IsSynchronizedWithCurrentItem="True" ItemsSource="{Binding allCustomers}" DisplayMemberPath="Name"/>
+                    <ComboBox x:Name="Combo_Customer" Margin="0,0,0,0" Text="Customer..." Background="{x:Null}" IsSynchronizedWithCurrentItem="True" ItemsSource="{Binding allCustomers}" DisplayMemberPath="Name" SelectedIndex="{Binding selCustomerID}"/>
                     <Label Content="Project" FontSize="9" Padding="5,5,5,1"/>
-                    <ComboBox x:Name="Combo_Project" Margin="0,0,0,0" Background="{x:Null}"/>
+                    <ComboBox x:Name="Combo_Project" Margin="0,0,0,0" Background="{x:Null}" ItemsSource="{Binding availProjects}" DisplayMemberPath="Name" SelectedIndex="{Binding selProjectID}"/>
                     <Label Content="Task" FontSize="9" Padding="5,5,5,1"/>
-                    <ComboBox x:Name="Combo_Task" Background="{x:Null}"/>
+                    <ComboBox x:Name="Combo_Task" Background="{x:Null}" ItemsSource="{Binding availTaskEntries}" DisplayMemberPath="Name" SelectedIndex="{Binding selTaskEntryID}"/>
                 </StackPanel>
                 <StackPanel x:Name="StackPanel_Buttons" Grid.Column="1" FlowDirection="LeftToRight" Orientation="Horizontal" HorizontalAlignment="Center">
                     <StackPanel x:Name="StackPanel_Play" Width="100" FlowDirection="LeftToRight" VerticalAlignment="Center" Margin="20,0,0,0">
@@ -122,7 +122,7 @@
                             <ColumnDefinition/>
                             <ColumnDefinition Width="30"/>
                         </Grid.ColumnDefinitions>
-                        <DataGrid x:Name="DataGrid_Customers"/>
+                        <DataGrid x:Name="DataGrid_Customers" ItemsSource="{Binding db_shownCustomers}"/>
                         <StackPanel x:Name="StackPanel_Customers_buttons" Grid.Column="1">
                             <Image x:Name="Img_Customers_Add" Width="20" Source="/IMAGES/Add_Simple_black.png" Cursor="Hand"/>
                             <Image x:Name="Img_Customers_Edit" Width="20" Source="/TIMEFRAME_windows;component/IMAGES/EditButton_Black.png" Cursor="Hand" Margin="0,10,0,0"/>
@@ -130,7 +130,7 @@
                         </StackPanel>
                     </Grid>
                 </Grid>
-                <Grid x:Name="Grid_ConfigProjects" Grid.Column="1" d:IsHidden="True">
+                <Grid x:Name="Grid_ConfigProjects" Grid.Column="1">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="30"/>
                         <RowDefinition Height="0"/>
@@ -142,7 +142,7 @@
                             <ColumnDefinition/>
                             <ColumnDefinition Width="30"/>
                         </Grid.ColumnDefinitions>
-                        <DataGrid x:Name="DataGrid_Projects"/>
+                        <DataGrid x:Name="DataGrid_Projects" ItemsSource="{Binding db_shownProjects}"/>
                         <StackPanel x:Name="StackPanel_Projects_buttons" Grid.Column="1">
                             <Image x:Name="Img_Projects_Add" Width="20" Source="/IMAGES/Add_Simple_black.png" Cursor="Hand"/>
                             <Image x:Name="Img_Projects_Edit" Width="20" Source="/TIMEFRAME_windows;component/IMAGES/EditButton_Black.png" Cursor="Hand" Margin="0,10,0,0"/>
@@ -150,7 +150,7 @@
                         </StackPanel>
                     </Grid>
                 </Grid>
-                <Grid x:Name="Grid_ConfigTasks" Grid.Column="1">
+                <Grid x:Name="Grid_ConfigTasks" Grid.Column="1" d:IsHidden="True">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="30"/>
                         <RowDefinition Height="0"/>
