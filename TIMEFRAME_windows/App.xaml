@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:TIMEFRAME_windows"
              StartupUri="VIEWS/V_Main.xaml">
+             <!--Startup="OnStartup">-->
     <Application.Resources>
          
     </Application.Resources>

@@ -5,10 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using TIMEFRAME_windows.MODELS;
+using TIMEFRAME_windows.SERVICES.Interfaces;
 
 namespace TIMEFRAME_windows.SERVICES
 {
-    public class BackendService
+    public class BackendService : IBackendService
     {
         // FIELDS
         private HttpClient client = new HttpClient();
@@ -25,15 +26,17 @@ namespace TIMEFRAME_windows.SERVICES
 
 
         // METHODS
-        private void InitializeHTTPclient()
+        public void InitializeHTTPclient()
         {
-            client.BaseAddress = new Uri("http://localhost:44303/");        // DEVELOPMENT URI
+            //client.BaseAddress = new Uri("http://localhost:44303/");                        // DEVELOPMENT URI
+            client.BaseAddress = new Uri("https://timeframeapi-test.azurewebsites.net/");    // PRODUCTION URI
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
         }
 
         #region CRUD - CUSTOMER
-        async void AddCustomer(Customer customer)
+        // POST 1 Customer
+        public async Task AddCustomer(Customer customer)
         {
             try
             {
@@ -48,8 +51,11 @@ namespace TIMEFRAME_windows.SERVICES
             }
         }
 
-        async Task<List<Customer>> Customer_Get()
+        // GET all Customers
+        public async Task<List<Customer>> Customer_Get()
         {
+            System.Windows.MessageBox.Show("Entering Customer_Get()");
+
             List<Customer> allCustomers = null;
 
             try
@@ -61,13 +67,22 @@ namespace TIMEFRAME_windows.SERVICES
                 if (response.IsSuccessStatusCode)
                 {
                     allCustomers = await response.Content.ReadAsAsync<List<Customer>>();
+                    System.Windows.MessageBox.Show("SUCCESS:  allCustomer.Count = " + allCustomers.Count.ToString());
                 }
+                else
+                {
+                    System.Windows.MessageBox.Show("ERROR:  " + response.StatusCode.ToString());
+                }
+
+                System.Windows.MessageBox.Show("Leaving Customer_Get()");
 
                 return allCustomers;
             }
             catch (Exception e)
             {
                 Logger.Write("!ERROR occurred while getting all customers : " + Environment.NewLine +
+                    e.ToString());
+                System.Windows.MessageBox.Show("Leaving Customer_Get() : ERROR: " + Environment.NewLine +
                     e.ToString());
                 return allCustomers;
             }
