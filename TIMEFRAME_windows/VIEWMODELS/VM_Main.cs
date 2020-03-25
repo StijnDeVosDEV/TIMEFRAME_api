@@ -64,11 +64,33 @@ namespace TIMEFRAME_windows.VIEWMODELS
         // Customer: delete
         private bool _customer_delete_IsEnabled;
 
+        // PROJECT CONFIG
+        private int _config_project_selID;
+        private Project _config_project_selProject;
+        // Project: add/edit
+        private Visibility _project_addedit_Visibility;
+        private int _project_addedit_selCustID;
+        private Customer _project_addedit_selCust;
+        private string _project_addedit_Name;
+        private string _project_addedit_Description;
+        // Project: edit
+        private bool _project_edit_IsEnabled;
+        private Visibility _project_edit_Visibility;
+        private int _project_edit_selCustID;
+        private Customer _project_edit_selCust;
+        private string _project_edit_Name;
+        private string _project_edit_Description;
+        // Project: delete
+        private bool _project_delete_IsEnabled;
+
 
         // Commands
         private VIEWMODELS.Base.GEN_RelayCommand _AddCustomer;
         private VIEWMODELS.Base.GEN_RelayCommand _EditCustomer;
         private VIEWMODELS.Base.GEN_RelayCommand _DeleteCustomer;
+        private VIEWMODELS.Base.GEN_RelayCommand _AddProject;
+        private VIEWMODELS.Base.GEN_RelayCommand _EditProject;
+        private VIEWMODELS.Base.GEN_RelayCommand _DeleteProject;
 
         // Services
         private IBackendService myBackendService;
@@ -334,6 +356,145 @@ namespace TIMEFRAME_windows.VIEWMODELS
             get { return _customer_delete_IsEnabled; }
             set { if (value != _customer_delete_IsEnabled) { _customer_delete_IsEnabled = value; RaisePropertyChangedEvent("customer_delete_IsEnabled"); } }
         }
+
+
+
+        // Configuration:  PROJECT
+        // -----------------------
+        // Configuration:  Project SELECTION
+        public int config_project_selID
+        {
+            get { return _config_project_selID; }
+            set
+            {
+                if (value != _config_project_selID)
+                {
+                    _config_project_selID = value; RaisePropertyChangedEvent("config_project_selID");
+                    if (config_project_selID > 0)
+                    {
+                        config_project_selProject = db_shownProjects[config_project_selID];
+                        project_edit_IsEnabled = true;
+                        Update_EditSelectionData(dataCategory.Project);
+                        project_delete_IsEnabled = true;
+                    }
+                    else { config_project_selProject = null; project_edit_IsEnabled = false; project_delete_IsEnabled = false; }
+                }
+            }
+        }
+
+        public Project config_project_selProject
+        {
+            get { return _config_project_selProject; }
+            set { if (value != _config_project_selProject) { _config_project_selProject = value; RaisePropertyChangedEvent("config_project_selProject"); } }
+        }
+
+        // Configuration:  Project ADD
+        public Visibility project_addedit_Visibility
+        {
+            get { return _project_addedit_Visibility; }
+            set
+            {
+                if (value != _project_addedit_Visibility)
+                {
+                    _project_addedit_Visibility = value; RaisePropertyChangedEvent("project_addedit_Visibility");
+                    if (project_addedit_Visibility == Visibility.Visible) { Update_SecondaryViewVisibilities(dataCategory.Project, true); }
+                }
+            }
+        }
+
+        public int project_addedit_selCustID
+        {
+            get { return _project_addedit_selCustID; }
+            set { if (value != _project_addedit_selCustID) { _project_addedit_selCustID = value; RaisePropertyChangedEvent("project_addedit_selCustID");
+                    if (project_addedit_selCustID > 0)
+                    {
+                        project_addedit_selCust = allCustomers[project_addedit_selCustID];
+                    }
+                    else { project_addedit_selCust = null; }
+                } }
+        }
+
+        public Customer project_addedit_selCust
+        {
+            get { return _project_addedit_selCust; }
+            set { if (value != _project_addedit_selCust) { _project_addedit_selCust = value; RaisePropertyChangedEvent("project_addedit_selCust"); } }
+        }
+
+        public string project_addedit_Name
+        {
+            get { return _project_addedit_Name; }
+            set { if (value != _project_addedit_Name) { _project_addedit_Name = value; RaisePropertyChangedEvent("project_addedit_Name"); } }
+        }
+
+        public string project_addedit_Description
+        {
+            get { return _project_addedit_Description; }
+            set { if (value != _project_addedit_Description) { _project_addedit_Description = value; RaisePropertyChangedEvent("project_addedit_Description"); } }
+        }
+
+
+
+
+        // Configuration:  Project EDIT
+        public bool project_edit_IsEnabled
+        {
+            get { return _project_edit_IsEnabled; }
+            set { if (value != _project_edit_IsEnabled) { _project_edit_IsEnabled = value; RaisePropertyChangedEvent("project_edit_IsEnabled"); } }
+        }
+
+        public Visibility project_edit_Visibility
+        {
+            get { return _project_edit_Visibility; }
+            set
+            {
+                if (value != _project_edit_Visibility)
+                {
+                    _project_edit_Visibility = value; RaisePropertyChangedEvent("project_edit_Visibility");
+                    if (project_edit_Visibility == Visibility.Visible) { Update_SecondaryViewVisibilities(dataCategory.Project, false); }
+                }
+            }
+        }
+        public int project_edit_selCustID
+        {
+            get { return _project_edit_selCustID; }
+            set
+            {
+                if (value != _project_edit_selCustID)
+                {
+                    _project_edit_selCustID = value; RaisePropertyChangedEvent("project_edit_selCustID");
+                    if (project_edit_selCustID > 0)
+                    {
+                        project_edit_selCust = allCustomers[project_edit_selCustID];
+                    }
+                    else { project_edit_selCust = null; }
+                }
+            }
+        }
+
+        public Customer project_edit_selCust
+        {
+            get { return _project_edit_selCust; }
+            set { if (value != _project_edit_selCust) { _project_edit_selCust = value; RaisePropertyChangedEvent("project_edit_selCust"); } }
+        }
+
+        public string project_edit_Name
+        {
+            get { return _project_edit_Name; }
+            set { if (value != _project_edit_Name) { _project_edit_Name = value; RaisePropertyChangedEvent("project_edit_Name"); } }
+        }
+
+        public string project_edit_Description
+        {
+            get { return _project_edit_Description; }
+            set { if (value != _project_edit_Description) { _project_edit_Description = value; RaisePropertyChangedEvent("project_edit_Description"); } }
+        }
+
+        // Configuration:  Project DELETE
+        public bool project_delete_IsEnabled
+        {
+            get { return _project_delete_IsEnabled; }
+            set { if (value != _project_delete_IsEnabled) { _project_delete_IsEnabled = value; RaisePropertyChangedEvent("project_delete_IsEnabled"); } }
+        }
         #endregion
 
 
@@ -344,6 +505,9 @@ namespace TIMEFRAME_windows.VIEWMODELS
         public ICommand AddCustomer { get { return _AddCustomer; } }
         public ICommand EditCustomer { get { return _EditCustomer; } }
         public ICommand DeleteCustomer { get { return _DeleteCustomer; } }
+        public ICommand AddProject { get { return _AddProject; } }
+        public ICommand EditProject { get { return _EditProject; } }
+        public ICommand DeleteProject { get { return _DeleteProject; } }
         #endregion
 
 
@@ -448,6 +612,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
         private void UpdateConfigurationComponent()
         {
             db_shownCustomers = allCustomers;
+            db_shownProjects = allProjects;
         }
 
         private void Update_SecondaryViewVisibilities(dataCategory SecondaryViewShown, bool shouldADDopen)
@@ -460,6 +625,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
                         if (shouldADDopen) { customer_edit_Visibility = Visibility.Hidden; } else { customer_addedit_Visibility = Visibility.Hidden; }
                         break;
                     case dataCategory.Project:
+                        if (shouldADDopen) { project_edit_Visibility = Visibility.Hidden; } else { project_addedit_Visibility = Visibility.Hidden; }
                         break;
                     case dataCategory.TaskEntry:
                         break;
@@ -489,6 +655,10 @@ namespace TIMEFRAME_windows.VIEWMODELS
                         break;
 
                     case dataCategory.Project:
+                        project_edit_Name = config_project_selProject.Name;
+                        project_edit_Description = config_project_selProject.Description;
+                        project_edit_selCustID = allCustomers.IndexOf(allCustomers.Single(x => x.Id == config_project_selProject.Id));
+
                         break;
                     case dataCategory.TaskEntry:
                         break;
@@ -516,6 +686,9 @@ namespace TIMEFRAME_windows.VIEWMODELS
             _AddCustomer = new Base.GEN_RelayCommand(param => this.Perform_AddCustomer());
             _EditCustomer = new Base.GEN_RelayCommand(param => this.Perform_EditCustomer());
             _DeleteCustomer = new Base.GEN_RelayCommand(param => this.Perform_DeleteCustomer());
+            _AddProject = new Base.GEN_RelayCommand(param => this.Perform_AddProject());
+            _EditProject = new Base.GEN_RelayCommand(param => this.Perform_EditProject());
+            _DeleteProject = new Base.GEN_RelayCommand(param => this.Perform_DeleteProject());
         }
 
         private async void Perform_AddCustomer()
@@ -607,6 +780,54 @@ namespace TIMEFRAME_windows.VIEWMODELS
                 Logger.Write("!ERROR occurred while trying to start adding new Customer: " + Environment.NewLine +
                     e.ToString());
             }
+        }
+
+        private async void Perform_AddProject()
+        {
+            try
+            {
+                // Create new Project
+                Project newProject = new Project()
+                {
+                    CustomerId = project_addedit_selCustID,
+                    Customer = project_addedit_selCust,
+                    Name = project_addedit_Name,
+                    Description = project_addedit_Description,
+                    CreationDate = DateTime.Now,
+                    Status = "Active"
+                };
+
+                // Update in database
+                await myBackendService.AddProject(newProject);
+
+                // Update in current app session
+                newProject.Id = allProjects.Count > 0 ? allProjects.Select(x => x.Id).Max() + 1 : 1;
+                allProjects.Add(newProject);
+
+                allCustomers.Single(x => x.Id == project_addedit_selCustID).Projects.Add(newProject);
+
+                // Update UI
+                project_addedit_selCustID = -1;
+                project_addedit_Name = "";
+                project_addedit_Description = "";
+                project_addedit_Visibility = Visibility.Hidden;
+                UpdateConfigurationComponent();
+            }
+            catch (Exception e)
+            {
+                Logger.Write("!ERROR occurred while trying to start adding new Customer: " + Environment.NewLine +
+                    e.ToString());
+            }
+        }
+
+        private void Perform_EditProject()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void Perform_DeleteProject()
+        {
+            throw new NotImplementedException();
         }
     }
 }

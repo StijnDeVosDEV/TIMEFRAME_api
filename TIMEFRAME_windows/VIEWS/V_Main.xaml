@@ -110,7 +110,7 @@
                     </StackPanel>
                 </StackPanel>
                 <Border x:Name="Border_SecondaryMenu" BorderThickness="1" BorderBrush="Black" Width="1" HorizontalAlignment="Right"/>
-                <Grid x:Name="Grid_ConfigCustomers" Grid.Column="1">
+                <Grid x:Name="Grid_ConfigCustomers" Grid.Column="1" d:IsHidden="True">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="30"/>
                         <RowDefinition Height="0"/>
@@ -172,7 +172,7 @@
                         </Grid>
                     </Grid>
                 </Grid>
-                <Grid x:Name="Grid_ConfigProjects" Grid.Column="1" d:IsHidden="True">
+                <Grid x:Name="Grid_ConfigProjects" Grid.Column="1">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="30"/>
                         <RowDefinition Height="0"/>
@@ -186,10 +186,48 @@
                         </Grid.ColumnDefinitions>
                         <DataGrid x:Name="DataGrid_Projects" ItemsSource="{Binding db_shownProjects}"/>
                         <StackPanel x:Name="StackPanel_Projects_buttons" Grid.Column="1">
-                            <Image x:Name="Img_Projects_Add" Width="20" Source="/IMAGES/Add_Simple_black.png" Cursor="Hand"/>
-                            <Image x:Name="Img_Projects_Edit" Width="20" Source="/TIMEFRAME_windows;component/IMAGES/EditButton_Black.png" Cursor="Hand" Margin="0,10,0,0"/>
-                            <Image x:Name="Img_Projects_Delete" Width="30" Source="/TIMEFRAME_windows;component/IMAGES/Remove_cross_black.png" Cursor="Hand" Margin="0,5,0,0"/>
+                            <Image x:Name="Img_Projects_Add" Width="20" Source="/IMAGES/Add_Simple_black.png" Cursor="Hand" MouseDown="Img_Projects_Add_MouseDown"/>
+                            <Image x:Name="Img_Projects_Edit" Width="20" Source="/TIMEFRAME_windows;component/IMAGES/EditButton_Black.png" Cursor="Hand" Margin="0,10,0,0" MouseDown="Img_Projects_Edit_MouseDown" IsEnabled="{Binding project_edit_IsEnabled}"/>
+                            <Image x:Name="Img_Projects_Delete" Width="30" Source="/TIMEFRAME_windows;component/IMAGES/Remove_cross_black.png" Cursor="Hand" Margin="0,5,0,0" IsEnabled="{Binding project_delete_IsEnabled}"/>
                         </StackPanel>
+                        <Grid x:Name="Grid_ConfigProjects_AddEdit" Background="#BF000000" Visibility="{Binding project_addedit_Visibility}">
+                            <StackPanel x:Name="StackPanel_ConfigProjects_AddEdit_Properties">
+                                <Label Content="Add new Project" FontWeight="Bold" Foreground="White" HorizontalContentAlignment="Left"/>
+                                <Label Content="Customer" Foreground="White"/>
+                                <ComboBox x:Name="Combo_Project_AddEdit_AvailCustomers" ItemsSource="{Binding allCustomers}" HorizontalContentAlignment="Left" Margin="10,0,10,0" SelectedIndex="{Binding project_addedit_selCustID}" DisplayMemberPath="Name" SelectionChanged="Combo_Project_AddEdit_AvailCustomers_SelectionChanged"/>
+                                <Label Content="Name" Foreground="White"/>
+                                <TextBox x:Name="TB_Project_AddEdit_Name" TextWrapping="Wrap" Margin="10,0,10,0" TextChanged="TB_Project_AddEdit_Name_TextChanged" Text="{Binding project_addedit_Name}"/>
+                                <Label Content="Description" Foreground="White"/>
+                                <TextBox x:Name="TB_Project_AddEdit_Description" TextWrapping="Wrap" Margin="10,0,10,0" TextChanged="TB_Project_AddEdit_Description_TextChanged" Text="{Binding project_addedit_Description}"/>
+                                <StackPanel x:Name="StackPanel_ConfigProjects_AddEdit_Buttons" Orientation="Horizontal" HorizontalAlignment="Center">
+                                    <Image x:Name="Img_ConfigProjects_AddEdit_AddorEdit" Height="30" Source="/TIMEFRAME_windows;component/IMAGES/Add_Simple_black.png" ToolTip="Add new project" Cursor="Hand" IsEnabled="False">
+                                        <Image.InputBindings>
+                                            <MouseBinding Gesture="LeftClick" Command="{Binding AddProject, Mode=Default}"/>
+                                        </Image.InputBindings>
+                                    </Image>
+                                    <Image x:Name="Img_ConfigProjects_AddEdit_Cancel" Height="70" Source="/TIMEFRAME_windows;component/IMAGES/Remove_cross_black.png" ToolTip="Cancel" Cursor="Hand" MouseDown="Img_ConfigProjects_AddEdit_Cancel_MouseDown"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Grid>
+                        <Grid x:Name="Grid_ConfigProjects_Edit" Background="#BF000000" Visibility="{Binding project_edit_Visibility}" d:IsHidden="True">
+                            <StackPanel x:Name="StackPanel_ConfigProjects_Edit_Properties">
+                                <Label Content="Edit Project" FontWeight="Bold" Foreground="White"/>
+                                <Label Content="Customer" Foreground="White"/>
+                                <ComboBox x:Name="Combo_Project_Edit_AvailCustomers" Margin="10,0,10,0" ItemsSource="{Binding allCustomers}" DisplayMemberPath="Name"/>
+                                <Label Content="Name" Foreground="White"/>
+                                <TextBox x:Name="TB_Project_Edit_Name" Text="{Binding project_edit_Name}" TextWrapping="Wrap" Margin="10,0,10,0" TextChanged="TB_Customer_Edit_Name_TextChanged"/>
+                                <Label Content="Description" Foreground="White"/>
+                                <TextBox x:Name="TB_Project_Edit_Description" Text="{Binding project_edit_Description}" TextWrapping="Wrap" Margin="10,0,10,0" TextChanged="TB_Customer_Edit_Surname_TextChanged"/>
+                                <StackPanel x:Name="StackPanel_ConfigProjects_Edit_Buttons" Orientation="Horizontal" HorizontalAlignment="Center">
+                                    <Image x:Name="Img_ConfigProjects_Edit_Edit" Height="30" Source="/TIMEFRAME_windows;component/IMAGES/EditButton_Black.png" ToolTip="Edit project" Cursor="Hand" IsEnabled="False">
+                                        <Image.InputBindings>
+                                            <MouseBinding Gesture="LeftClick" Command="{Binding EditCustomer, Mode=Default}"/>
+                                        </Image.InputBindings>
+                                    </Image>
+                                    <Image x:Name="Img_ConfigProjects_Edit_Cancel" Height="70" Source="/TIMEFRAME_windows;component/IMAGES/Remove_cross_black.png" ToolTip="Cancel" Cursor="Hand" MouseDown="Img_ConfigProjects_Edit_Cancel_MouseDown"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Grid>
                     </Grid>
                 </Grid>
                 <Grid x:Name="Grid_ConfigTasks" Grid.Column="1" d:IsHidden="True">

@@ -325,6 +325,12 @@ namespace TIMEFRAME_windows.VIEWS
             StackPanel_Config_Task.Background = highlightColor_Transparent;
         }
 
+
+
+        // -----------------------
+        // CONFIGURATION CUSTOMERS
+        // -----------------------
+        #region CONFIGURATION CUSTOMERS
         private void Img_Customers_Add_MouseDown(object sender, MouseButtonEventArgs e)
         {
             switch (Grid_ConfigCustomers_AddEdit.Visibility)
@@ -392,6 +398,64 @@ namespace TIMEFRAME_windows.VIEWS
         {
             Update_CustomerConfig_EditButton();
         }
+        #endregion
+
+
+        // ----------------------
+        // CONFIGURATION PROJECTS
+        // ----------------------
+        #region CONFIGURATION PROJECTS
+        private void Img_Projects_Add_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            switch (Grid_ConfigProjects_AddEdit.Visibility)
+            {
+                case Visibility.Visible:
+                    Grid_ConfigProjects_AddEdit.Visibility = Visibility.Hidden;
+                    break;
+                case Visibility.Hidden:
+                    Grid_ConfigProjects_AddEdit.Visibility = Visibility.Visible;
+                    break;
+                case Visibility.Collapsed:
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void Img_ConfigProjects_AddEdit_Cancel_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Grid_ConfigProjects_AddEdit.Visibility = Visibility.Hidden;
+        }
+
+        private void Img_Projects_Edit_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (Grid_ConfigProjects_Edit.Visibility == Visibility.Visible)
+            {
+                Grid_ConfigProjects_Edit.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                Grid_ConfigProjects_Edit.Visibility = Visibility.Visible;
+            }
+        }
+        private void Img_ConfigProjects_Edit_Cancel_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Grid_ConfigProjects_Edit.Visibility = Visibility.Hidden;
+        }
+
+        private void Combo_Project_AddEdit_AvailCustomers_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Update_ProjectConfig_AddButton();
+        }
+        private void TB_Project_AddEdit_Name_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Update_ProjectConfig_AddButton();
+        }
+        private void TB_Project_AddEdit_Description_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Update_ProjectConfig_AddButton();
+        }
+        #endregion
 
 
         // -------------------------
@@ -418,6 +482,30 @@ namespace TIMEFRAME_windows.VIEWS
             else
             {
                 Img_ConfigCustomers_Edit_Edit.IsEnabled = false;
+            }
+        }
+
+        private void Update_ProjectConfig_AddButton()
+        {
+            if (TB_Project_AddEdit_Name.Text != "" && TB_Project_AddEdit_Description.Text != "" && Combo_Project_AddEdit_AvailCustomers.SelectedIndex > 0)
+            {
+                Img_ConfigProjects_AddEdit_AddorEdit.IsEnabled = true;
+            }
+            else
+            {
+                Img_ConfigProjects_AddEdit_AddorEdit.IsEnabled = false;
+            }
+        }
+
+        private void Update_ProjectConfig_EditButton()
+        {
+            if (TB_Project_Edit_Name.Text != "" && TB_Project_Edit_Description.Text != "" && Combo_Project_Edit_AvailCustomers.SelectedIndex > 0)
+            {
+                Img_ConfigProjects_Edit_Edit.IsEnabled = true;
+            }
+            else
+            {
+                Img_ConfigProjects_Edit_Edit.IsEnabled = false;
             }
         }
     }
