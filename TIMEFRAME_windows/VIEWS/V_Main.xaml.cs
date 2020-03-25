@@ -62,6 +62,10 @@ namespace TIMEFRAME_windows.VIEWS
 
             Config_ActiveState = ConfigBlocks.Customers;
             StackPanel_Config_Customer.Background = highlightColor_SecondMenu;
+
+
+            // Initialize Configuration area
+            Grid_ConfigCustomers_AddEdit.Visibility = Visibility.Hidden;
         }
 
         private void StackPanel_Config_Customer_MouseEnter(object sender, MouseEventArgs e)
@@ -319,6 +323,58 @@ namespace TIMEFRAME_windows.VIEWS
             StackPanel_Config_Customer.Background = highlightColor_Transparent;
             StackPanel_Config_Project.Background = highlightColor_Transparent;
             StackPanel_Config_Task.Background = highlightColor_Transparent;
+        }
+
+        private void Img_Customers_Add_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            switch (Grid_ConfigCustomers_AddEdit.Visibility)
+            {
+                case Visibility.Visible:
+                    Grid_ConfigCustomers_AddEdit.Visibility = Visibility.Hidden;
+                    break;
+                case Visibility.Hidden:
+                    Grid_ConfigCustomers_AddEdit.Visibility = Visibility.Visible;
+                    break;
+                case Visibility.Collapsed:
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void Img_ConfigCustomers_AddEdit_Cancel_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Grid_ConfigCustomers_AddEdit.Visibility = Visibility.Hidden;
+        }
+
+        private void TB_Customer_AddEdit_Name_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Update_CustomerConfig_AddButton();
+        }
+        private void TB_Customer_AddEdit_Surname_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Update_CustomerConfig_AddButton();
+        }
+
+        private void TB_Customer_AddEdit_Email_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Update_CustomerConfig_AddButton();
+        }
+
+
+        // -------------------------
+        // CUSTOM METHODS
+        // -------------------------
+        private void Update_CustomerConfig_AddButton()
+        {
+            if (TB_Customer_AddEdit_Name.Text != "" && TB_Customer_AddEdit_Surname.Text != "" && TB_Customer_AddEdit_Email.Text != "")
+            {
+                Img_ConfigCustomers_AddEdit_AddorEdit.IsEnabled = true;
+            }
+            else
+            {
+                Img_ConfigCustomers_AddEdit_AddorEdit.IsEnabled = false;
+            }
         }
     }
 }

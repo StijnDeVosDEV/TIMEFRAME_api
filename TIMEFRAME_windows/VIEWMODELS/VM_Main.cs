@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using TIMEFRAME_windows.MODELS;
 using TIMEFRAME_windows.SERVICES;
 using TIMEFRAME_windows.SERVICES.Interfaces;
@@ -42,8 +43,15 @@ namespace TIMEFRAME_windows.VIEWMODELS
         private ObservableCollection<TaskEntry> _db_shownTaskEntries;
         private ObservableCollection<TimeEntry> _db_shownTimeEntries;
 
-        // Commands
+        // Customer: add/edit
+        private string _customer_addedit_Title;
+        private string _customer_addedit_Name;
+        private string _customer_addedit_Surname;
+        private string _customer_addedit_Email;
 
+
+        // Commands
+        private VIEWMODELS.Base.GEN_RelayCommand _AddCustomer;
 
         // Services
         private IBackendService myBackendService;
@@ -195,6 +203,30 @@ namespace TIMEFRAME_windows.VIEWMODELS
             get { return _db_shownTimeEntries; }
             set { if (value != _db_shownTimeEntries) { _db_shownTimeEntries = value; RaisePropertyChangedEvent("db_shownTimeEntries"); } }
         }
+
+        public string customer_addedit_Title
+        {
+            get { return _customer_addedit_Title; }
+            set { if (value != _customer_addedit_Title) { _customer_addedit_Title = value; RaisePropertyChangedEvent("customer_addedit_Title"); } }
+        }
+        
+        public string customer_addedit_Name
+        {
+            get { return _customer_addedit_Name; }
+            set { if (value != _customer_addedit_Name) { _customer_addedit_Name = value; RaisePropertyChangedEvent("customer_addedit_Name"); } }
+        }
+
+        public string customer_addedit_Surname
+        {
+            get { return _customer_addedit_Surname; }
+            set { if (value != _customer_addedit_Surname) { _customer_addedit_Surname = value; RaisePropertyChangedEvent("customer_addedit_Surname"); } }
+        }
+
+        public string customer_addedit_Email
+        {
+            get { return _customer_addedit_Email; }
+            set { if (value != _customer_addedit_Email) { _customer_addedit_Email = value; RaisePropertyChangedEvent("customer_addedit_Email"); } }
+        }
         #endregion
 
 
@@ -202,7 +234,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
         // Public command declarations
         // ---------------------------
         #region COMMANDS
-
+        public ICommand AddCustomer { get { return _AddCustomer; } }
         #endregion
 
 
@@ -304,7 +336,10 @@ namespace TIMEFRAME_windows.VIEWMODELS
         }
 
 
-
+        private void UpdateConfigurationComponent()
+        {
+            db_shownCustomers = allCustomers;
+        }
 
         //  ----------------------
         // COMMAND RELATED METHODS
@@ -314,7 +349,37 @@ namespace TIMEFRAME_windows.VIEWMODELS
         /// </summary>
         private void LoadCommands()
         {
-            
+            _AddCustomer = new Base.GEN_RelayCommand(param => this.Perform_AddCustomer());
+        }
+
+        private async void Perform_AddCustomer()
+        {
+            try
+            {
+                // Create new Customer
+                Customer newCustomer = new Customer()
+                {
+                    Name = customer_addedit_Name,
+                    Surname = customer_addedit_Surname,
+                    Email = customer_addedit_Email,
+                    CreationDate = DateTime.Now,
+                    Status = "Active"
+                };
+
+                // Update in database
+                await myBackendService.AddCustomer(newCustomer);
+
+                // Update in current app session
+                newCustomer.Id = allCustomers.Count + 1;
+                allCustomers.Add(newCustomer);
+
+                UpdateConfigurationComponent();
+            }
+            catch (Exception e)
+            {
+                Logger.Write("!ERROR occurred while trying to start adding new Customer: " + Environment.NewLine +
+                    e.ToString());
+            }
         }
     }
 }
