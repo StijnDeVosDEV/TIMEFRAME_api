@@ -361,6 +361,38 @@ namespace TIMEFRAME_windows.VIEWS
             Update_CustomerConfig_AddButton();
         }
 
+        private void Img_Customers_Edit_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (Grid_ConfigCustomers_Edit.Visibility == Visibility.Visible)
+            {
+                Grid_ConfigCustomers_Edit.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                Grid_ConfigCustomers_Edit.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void Img_ConfigCustomers_Edit_Cancel_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Grid_ConfigCustomers_Edit.Visibility = Visibility.Hidden;
+        }
+
+        private void TB_Customer_Edit_Name_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Update_CustomerConfig_EditButton();
+        }
+
+        private void TB_Customer_Edit_Surname_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Update_CustomerConfig_EditButton();
+        }
+
+        private void TB_Customer_Edit_Email_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Update_CustomerConfig_EditButton();
+        }
+
 
         // -------------------------
         // CUSTOM METHODS
@@ -374,6 +406,18 @@ namespace TIMEFRAME_windows.VIEWS
             else
             {
                 Img_ConfigCustomers_AddEdit_AddorEdit.IsEnabled = false;
+            }
+        }
+
+        private void Update_CustomerConfig_EditButton()
+        {
+            if (TB_Customer_Edit_Name.Text != "" && TB_Customer_Edit_Surname.Text != "" && TB_Customer_Edit_Email.Text != "")
+            {
+                Img_ConfigCustomers_Edit_Edit.IsEnabled = true;
+            }
+            else
+            {
+                Img_ConfigCustomers_Edit_Edit.IsEnabled = false;
             }
         }
     }

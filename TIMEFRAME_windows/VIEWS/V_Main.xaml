@@ -122,13 +122,13 @@
                             <ColumnDefinition/>
                             <ColumnDefinition Width="30"/>
                         </Grid.ColumnDefinitions>
-                        <DataGrid x:Name="DataGrid_Customers" ItemsSource="{Binding db_shownCustomers}"/>
+                        <DataGrid x:Name="DataGrid_Customers" ItemsSource="{Binding db_shownCustomers}" SelectedIndex="{Binding config_customer_selID}"/>
                         <StackPanel x:Name="StackPanel_Customers_buttons" Grid.Column="1">
                             <Image x:Name="Img_Customers_Add" Width="20" Source="/IMAGES/Add_Simple_black.png" Cursor="Hand" MouseDown="Img_Customers_Add_MouseDown"/>
-                            <Image x:Name="Img_Customers_Edit" Width="20" Source="/TIMEFRAME_windows;component/IMAGES/EditButton_Black.png" Cursor="Hand" Margin="0,10,0,0"/>
+                            <Image x:Name="Img_Customers_Edit" Width="20" Source="/TIMEFRAME_windows;component/IMAGES/EditButton_Black.png" Cursor="Hand" Margin="0,10,0,0" MouseDown="Img_Customers_Edit_MouseDown" IsEnabled="{Binding customer_edit_IsEnabled}"/>
                             <Image x:Name="Img_Customers_Delete" Width="30" Source="/TIMEFRAME_windows;component/IMAGES/Remove_cross_black.png" Cursor="Hand" Margin="0,5,0,0"/>
                         </StackPanel>
-                        <Grid x:Name="Grid_ConfigCustomers_AddEdit" Background="#BF000000" Visibility="{Binding customer_addedit_Visibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        <Grid x:Name="Grid_ConfigCustomers_AddEdit" Background="#BF000000" Visibility="{Binding customer_addedit_Visibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" d:IsHidden="True">
                             <StackPanel x:Name="StackPanel_ConfigCustomers_AddEdit_Properties">
                                 <Label Content="Add new Customer" FontWeight="Bold" Foreground="White"/>
                                 <Label Content="Name" Foreground="White"/>
@@ -144,6 +144,25 @@
                                         </Image.InputBindings>
                                     </Image>
                                     <Image x:Name="Img_ConfigCustomers_AddEdit_Cancel" Height="70" Source="/TIMEFRAME_windows;component/IMAGES/Remove_cross_black.png" ToolTip="Cancel" Cursor="Hand" MouseDown="Img_ConfigCustomers_AddEdit_Cancel_MouseDown"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Grid>
+                        <Grid x:Name="Grid_ConfigCustomers_Edit" Background="#BF000000" Visibility="{Binding customer_edit_Visibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                            <StackPanel x:Name="StackPanel_ConfigCustomers_Edit_Properties">
+                                <Label Content="Edit Customer" FontWeight="Bold" Foreground="White"/>
+                                <Label Content="Name" Foreground="White"/>
+                                <TextBox x:Name="TB_Customer_Edit_Name" Text="{Binding customer_edit_Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Margin="10,0,10,0" TextChanged="TB_Customer_Edit_Name_TextChanged"/>
+                                <Label Content="Surname" Foreground="White"/>
+                                <TextBox x:Name="TB_Customer_Edit_Surname" Text="{Binding customer_edit_Surname, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Margin="10,0,10,0" TextChanged="TB_Customer_Edit_Surname_TextChanged"/>
+                                <Label Content="Email" Foreground="White"/>
+                                <TextBox x:Name="TB_Customer_Edit_Email" Text="{Binding customer_edit_Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" Margin="10,0,10,0" TextChanged="TB_Customer_Edit_Email_TextChanged"/>
+                                <StackPanel x:Name="StackPanel_ConfigCustomers_Edit_Buttons" Orientation="Horizontal" HorizontalAlignment="Center">
+                                    <Image x:Name="Img_ConfigCustomers_Edit_Edit" Height="30" Source="/TIMEFRAME_windows;component/IMAGES/EditButton_Black.png" ToolTip="Edit customer" Cursor="Hand" IsEnabled="False">
+                                        <Image.InputBindings>
+                                            <MouseBinding Gesture="LeftClick" Command="{Binding EditCustomer, Mode=Default}"/>
+                                        </Image.InputBindings>
+                                    </Image>
+                                    <Image x:Name="Img_ConfigCustomers_Edit_Cancel" Height="70" Source="/TIMEFRAME_windows;component/IMAGES/Remove_cross_black.png" ToolTip="Cancel" Cursor="Hand" MouseDown="Img_ConfigCustomers_Edit_Cancel_MouseDown"/>
                                 </StackPanel>
                             </StackPanel>
                         </Grid>

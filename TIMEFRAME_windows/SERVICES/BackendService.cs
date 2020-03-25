@@ -80,6 +80,20 @@ namespace TIMEFRAME_windows.SERVICES
                 return allCustomers;
             }
         }
+
+        // PUT 1 Customer
+        public async Task EditCustomer(Customer customer)
+        {
+            try
+            {
+                HttpResponseMessage response = await client.PutAsJsonAsync("api/customers/" + customer.Id.ToString(), customer);
+            }
+            catch (Exception e)
+            {
+                Logger.Write("!ERROR occurred while modifying customer : " + Environment.NewLine +
+                    e.ToString());
+            }
+        }
         #endregion
 
         #region PROJECTS
