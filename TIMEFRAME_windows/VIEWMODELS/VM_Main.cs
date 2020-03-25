@@ -105,7 +105,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
         public ObservableCollection<Customer> allCustomers
         {
             get { return _allCustomers; }
-            set { if (value != _allCustomers) { _allCustomers = value; RaisePropertyChangedEvent("allCustomers"); db_shownCustomers = allCustomers; } }
+            set { if (value != _allCustomers) { _allCustomers = value; RaisePropertyChangedEvent("allCustomers"); } }
         }
 
         public List<Customer> allcustomers_placeholder
@@ -117,7 +117,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
         public ObservableCollection<Project> allProjects
         {
             get { return _allProjects; }
-            set { if (value != _allProjects) { _allProjects = value; RaisePropertyChangedEvent("allProjects"); db_shownProjects = allProjects; } }
+            set { if (value != _allProjects) { _allProjects = value; RaisePropertyChangedEvent("allProjects"); } }
         }
 
         public List<Project> allprojects_placeholder
@@ -233,6 +233,8 @@ namespace TIMEFRAME_windows.VIEWMODELS
                 allCustomers.Add(customer);
                 Logger.Write("- Added:  " + customer.Name.ToUpper());
             }
+
+            db_shownCustomers = allCustomers;
         }
 
         private void ParseProjectData()
@@ -247,6 +249,8 @@ namespace TIMEFRAME_windows.VIEWMODELS
                 allProjects.Add(project);
                 Logger.Write("- Added:  " + project.Name.ToUpper());
             }
+
+            db_shownProjects = allProjects;
         }
 
         private enum dataCategory
