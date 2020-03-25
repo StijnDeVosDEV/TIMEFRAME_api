@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using TIMEFRAME_windows.MODELS;
 using TIMEFRAME_windows.SERVICES;
@@ -44,6 +45,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
         private ObservableCollection<TimeEntry> _db_shownTimeEntries;
 
         // Customer: add/edit
+        private Visibility _customer_addedit_Visibility;
         private string _customer_addedit_Title;
         private string _customer_addedit_Name;
         private string _customer_addedit_Surname;
@@ -91,6 +93,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
             db_shownProjects = new ObservableCollection<Project>();
             db_shownTaskEntries = new ObservableCollection<TaskEntry>();
             db_shownTimeEntries = new ObservableCollection<TimeEntry>();
+            customer_addedit_Visibility = Visibility.Visible;
 
             // Initializations
             InitializeData();
@@ -204,6 +207,14 @@ namespace TIMEFRAME_windows.VIEWMODELS
             set { if (value != _db_shownTimeEntries) { _db_shownTimeEntries = value; RaisePropertyChangedEvent("db_shownTimeEntries"); } }
         }
 
+
+
+        public Visibility customer_addedit_Visibility
+        {
+            get { return _customer_addedit_Visibility; }
+            set { if (value != _customer_addedit_Visibility) { _customer_addedit_Visibility = value; RaisePropertyChangedEvent("customer_addedit_Visibility"); } }
+        }
+        
         public string customer_addedit_Title
         {
             get { return _customer_addedit_Title; }
@@ -373,6 +384,12 @@ namespace TIMEFRAME_windows.VIEWMODELS
                 newCustomer.Id = allCustomers.Count + 1;
                 allCustomers.Add(newCustomer);
 
+
+                // Update UI
+                customer_addedit_Name = "";
+                customer_addedit_Surname = "";
+                customer_addedit_Email = "";
+                customer_addedit_Visibility = Visibility.Hidden;
                 UpdateConfigurationComponent();
             }
             catch (Exception e)

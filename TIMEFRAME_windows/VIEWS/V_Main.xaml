@@ -128,7 +128,7 @@
                             <Image x:Name="Img_Customers_Edit" Width="20" Source="/TIMEFRAME_windows;component/IMAGES/EditButton_Black.png" Cursor="Hand" Margin="0,10,0,0"/>
                             <Image x:Name="Img_Customers_Delete" Width="30" Source="/TIMEFRAME_windows;component/IMAGES/Remove_cross_black.png" Cursor="Hand" Margin="0,5,0,0"/>
                         </StackPanel>
-                        <Grid x:Name="Grid_ConfigCustomers_AddEdit" Background="#BF000000">
+                        <Grid x:Name="Grid_ConfigCustomers_AddEdit" Background="#BF000000" Visibility="{Binding customer_addedit_Visibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                             <StackPanel x:Name="StackPanel_ConfigCustomers_AddEdit_Properties">
                                 <Label Content="Add new Customer" FontWeight="Bold" Foreground="White"/>
                                 <Label Content="Name" Foreground="White"/>
