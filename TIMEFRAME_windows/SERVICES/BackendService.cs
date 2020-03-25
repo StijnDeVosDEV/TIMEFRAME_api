@@ -35,7 +35,7 @@ namespace TIMEFRAME_windows.SERVICES
         }
 
         #region CUSTOMERS
-        // POST 1 Customer
+        // POST Customer
         public async Task AddCustomer(Customer customer)
         {
             try
@@ -81,7 +81,7 @@ namespace TIMEFRAME_windows.SERVICES
             }
         }
 
-        // PUT 1 Customer
+        // PUT Customer
         public async Task EditCustomer(Customer customer)
         {
             try
@@ -91,6 +91,20 @@ namespace TIMEFRAME_windows.SERVICES
             catch (Exception e)
             {
                 Logger.Write("!ERROR occurred while modifying customer : " + Environment.NewLine +
+                    e.ToString());
+            }
+        }
+
+        // DELETE Customer
+        public async Task DeleteCustomer(int customerID)
+        {
+            try
+            {
+                HttpResponseMessage response = await client.DeleteAsync("api/customers/" + customerID.ToString());
+            }
+            catch (Exception e)
+            {
+                Logger.Write("!ERROR occurred while deleting customer : " + Environment.NewLine +
                     e.ToString());
             }
         }

@@ -17,6 +17,8 @@ namespace TIMEFRAME_windows.SERVICES.Interfaces
         public Task<List<Customer>> GetCustomers();
 
         public Task EditCustomer(Customer customer);
+
+        public Task DeleteCustomer(int customerID);
         #endregion
 
         #region PROJECTS

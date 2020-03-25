@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Collections.ObjectModel;
 using System.Text;
 using System.Threading.Tasks;
@@ -60,11 +61,14 @@ namespace TIMEFRAME_windows.VIEWMODELS
         private string _customer_edit_Name;
         private string _customer_edit_Surname;
         private string _customer_edit_Email;
+        // Customer: delete
+        private bool _customer_delete_IsEnabled;
 
 
         // Commands
         private VIEWMODELS.Base.GEN_RelayCommand _AddCustomer;
         private VIEWMODELS.Base.GEN_RelayCommand _EditCustomer;
+        private VIEWMODELS.Base.GEN_RelayCommand _DeleteCustomer;
 
         // Services
         private IBackendService myBackendService;
@@ -125,7 +129,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
         // ----------------------------
         // Public variable declarations
         // ----------------------------
-        #region PROPERTIES
+        #region RECORD Component
         public ObservableCollection<Customer> allCustomers
         {
             get { return _allCustomers; }
@@ -197,9 +201,10 @@ namespace TIMEFRAME_windows.VIEWMODELS
             get { return _selTaskEntry; }
             set { if (value != _selTaskEntry) { _selTaskEntry = value; RaisePropertyChangedEvent("selTaskEntry"); } }
         }
+        #endregion
 
-
-
+        #region CONFIGURATION Component
+        // Shown lists
         public ObservableCollection<Customer> db_shownCustomers
         {
             get { return _db_shownCustomers ; }
@@ -226,13 +231,21 @@ namespace TIMEFRAME_windows.VIEWMODELS
 
 
 
-
+        // Configuration:  CUSTOMER
+        // ------------------------
+        // Configuration:  Customer SELECTION
         public int config_customer_selID
         {
             get { return _config_customer_selID; }
             set { if (value != _config_customer_selID) { _config_customer_selID = value; RaisePropertyChangedEvent("config_customer_selID");
-                    if (config_customer_selID > 0) { config_customer_selCustomer = db_shownCustomers[config_customer_selID]; customer_edit_IsEnabled = true; Update_EditSelectionData(dataCategory.Customer); }
-                    else { config_customer_selCustomer = null; customer_edit_IsEnabled = false; }
+                    if (config_customer_selID > 0) 
+                    { 
+                        config_customer_selCustomer = db_shownCustomers[config_customer_selID];
+                        customer_edit_IsEnabled = true;
+                        Update_EditSelectionData(dataCategory.Customer);
+                        customer_delete_IsEnabled = true;
+                    }
+                    else { config_customer_selCustomer = null; customer_edit_IsEnabled = false; customer_delete_IsEnabled = false; }
                 } }
         }
 
@@ -242,6 +255,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
             set { if (value != _config_customer_selCustomer) { _config_customer_selCustomer = value; RaisePropertyChangedEvent("config_customer_selCustomer"); } }
         }
 
+        // Configuration:  Customer ADD
         public Visibility customer_addedit_Visibility
         {
             get { return _customer_addedit_Visibility; }
@@ -275,7 +289,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
         }
 
 
-
+        // Configuration:  Customer EDIT
         public bool customer_edit_IsEnabled
         {
             get { return _customer_edit_IsEnabled; }
@@ -313,6 +327,13 @@ namespace TIMEFRAME_windows.VIEWMODELS
             get { return _customer_edit_Email; }
             set { if (value != _customer_edit_Email) { _customer_edit_Email = value; RaisePropertyChangedEvent("customer_edit_Email"); } }
         }
+
+        // Configuration:  Customer DELETE
+        public bool customer_delete_IsEnabled
+        {
+            get { return _customer_delete_IsEnabled; }
+            set { if (value != _customer_delete_IsEnabled) { _customer_delete_IsEnabled = value; RaisePropertyChangedEvent("customer_delete_IsEnabled"); } }
+        }
         #endregion
 
 
@@ -322,6 +343,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
         #region COMMANDS
         public ICommand AddCustomer { get { return _AddCustomer; } }
         public ICommand EditCustomer { get { return _EditCustomer; } }
+        public ICommand DeleteCustomer { get { return _DeleteCustomer; } }
         #endregion
 
 
@@ -493,6 +515,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
         {
             _AddCustomer = new Base.GEN_RelayCommand(param => this.Perform_AddCustomer());
             _EditCustomer = new Base.GEN_RelayCommand(param => this.Perform_EditCustomer());
+            _DeleteCustomer = new Base.GEN_RelayCommand(param => this.Perform_DeleteCustomer());
         }
 
         private async void Perform_AddCustomer()
@@ -513,9 +536,8 @@ namespace TIMEFRAME_windows.VIEWMODELS
                 await myBackendService.AddCustomer(newCustomer);
 
                 // Update in current app session
-                newCustomer.Id = allCustomers.Count + 1;
+                newCustomer.Id = allCustomers.Select(x => x.Id).Max() + 1;
                 allCustomers.Add(newCustomer);
-
 
                 // Update UI
                 customer_addedit_Name = "";
@@ -555,6 +577,29 @@ namespace TIMEFRAME_windows.VIEWMODELS
 
                 // Update UI
                 customer_edit_Visibility = Visibility.Hidden;
+                UpdateConfigurationComponent();
+            }
+            catch (Exception e)
+            {
+                Logger.Write("!ERROR occurred while trying to start adding new Customer: " + Environment.NewLine +
+                    e.ToString());
+            }
+        }
+
+        private async void Perform_DeleteCustomer()
+        {
+            try
+            {
+                // Update in database
+                await myBackendService.DeleteCustomer(config_customer_selCustomer.Id);
+
+                // Update in current app session
+                
+                allCustomers.Remove(SERVICES.HelperService.ConvertToList(allCustomers).Find(x => x.Id == config_customer_selCustomer.Id));
+                selCustomerID = -1;
+                config_customer_selID = -1;
+
+                // Update UI
                 UpdateConfigurationComponent();
             }
             catch (Exception e)
