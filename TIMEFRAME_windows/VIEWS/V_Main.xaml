@@ -14,6 +14,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="150"/>
             <RowDefinition/>
+            <RowDefinition Height="17"/>
         </Grid.RowDefinitions>
         <Grid x:Name="Grid_Core" Height="150">
             <Grid.ColumnDefinitions>
@@ -304,6 +305,9 @@
                 </StackPanel>
                 <Border BorderThickness="1" BorderBrush="Black" Width="1" HorizontalAlignment="Right"/>
             </Grid>
+        </Grid>
+        <Grid x:Name="Grid_Notifications" Grid.Row="2" Background="#FF556A80">
+            <TextBlock x:Name="TextBlock_Notification" Text="{Binding UInotification}" TextWrapping="Wrap" HorizontalAlignment="Center" FontSize="10" VerticalAlignment="Center" Foreground="White"/>
         </Grid>
 
     </Grid>

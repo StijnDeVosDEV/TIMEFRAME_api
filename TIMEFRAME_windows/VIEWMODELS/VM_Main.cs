@@ -24,6 +24,8 @@ namespace TIMEFRAME_windows.VIEWMODELS
         private ObservableCollection<Project> _allProjects;
         private List<Project> _allprojects_placeholder;
 
+        private string _UInotification;
+
 
         // Record block
         // ------------
@@ -106,6 +108,9 @@ namespace TIMEFRAME_windows.VIEWMODELS
         //  -----------
         public VM_Main()
         {
+            // Initialization
+            UInotification = "";
+
             // Inject Services
             //InitializeServiceInjections(new BackendService());
             myBackendService = new BackendService();
@@ -151,6 +156,14 @@ namespace TIMEFRAME_windows.VIEWMODELS
         // ----------------------------
         // Public variable declarations
         // ----------------------------
+        #region GENERAL
+        public string UInotification
+        {
+            get { return _UInotification; }
+            set { if (value != _UInotification) { _UInotification = value; RaisePropertyChangedEvent("UInotification"); } }
+        }
+        #endregion
+
         #region RECORD Component
         public ObservableCollection<Customer> allCustomers
         {
@@ -167,7 +180,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
         public ObservableCollection<Project> allProjects
         {
             get { return _allProjects; }
-            set { if (value != _allProjects) { _allProjects = value; RaisePropertyChangedEvent("allProjects"); } }
+            set { if (value != _allProjects) { _allProjects = value; RaisePropertyChangedEvent("allProjects"); ParseProjectData(); } }
         }
 
         public List<Project> allprojects_placeholder
@@ -545,14 +558,22 @@ namespace TIMEFRAME_windows.VIEWMODELS
         private void ParseProjectData()
         {
             Logger.Write("PARSING PROJECT DATA:");
-            Logger.Write("allprojects_placeholder.Count = " + allprojects_placeholder.Count.ToString());
+            //Logger.Write("allprojects_placeholder.Count = " + allprojects_placeholder.Count.ToString());
 
             allProjects.Clear();
 
-            foreach (Project project in allprojects_placeholder)
+            if(allprojects_placeholder != null && allprojects_placeholder.Count > 0)
             {
-                allProjects.Add(project);
-                Logger.Write("- Added:  " + project.Name.ToUpper());
+                foreach (Project project in allprojects_placeholder)
+                {
+                    allProjects.Add(project);
+                    Logger.Write("- Added:  " + project.Name.ToUpper());
+                }
+            }
+            else
+            {
+                Logger.Write("allprojects_placeholder = null or does not contain any data!");
+                UInotification = "No projects were found in storage!";
             }
 
             db_shownProjects = allProjects;
@@ -789,7 +810,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
                 // Create new Project
                 Project newProject = new Project()
                 {
-                    CustomerId = project_addedit_selCustID,
+                    //CustomerId = project_addedit_selCustID,
                     Customer = project_addedit_selCust,
                     Name = project_addedit_Name,
                     Description = project_addedit_Description,

@@ -487,7 +487,7 @@ namespace TIMEFRAME_windows.VIEWS
 
         private void Update_ProjectConfig_AddButton()
         {
-            if (TB_Project_AddEdit_Name.Text != "" && TB_Project_AddEdit_Description.Text != "" && Combo_Project_AddEdit_AvailCustomers.SelectedIndex > 0)
+            if (TB_Project_AddEdit_Name.Text != "" && TB_Project_AddEdit_Description.Text != "" && Combo_Project_AddEdit_AvailCustomers.SelectedIndex > -1)
             {
                 Img_ConfigProjects_AddEdit_AddorEdit.IsEnabled = true;
             }
@@ -499,7 +499,7 @@ namespace TIMEFRAME_windows.VIEWS
 
         private void Update_ProjectConfig_EditButton()
         {
-            if (TB_Project_Edit_Name.Text != "" && TB_Project_Edit_Description.Text != "" && Combo_Project_Edit_AvailCustomers.SelectedIndex > 0)
+            if (TB_Project_Edit_Name.Text != "" && TB_Project_Edit_Description.Text != "" && Combo_Project_Edit_AvailCustomers.SelectedIndex > -1)
             {
                 Img_ConfigProjects_Edit_Edit.IsEnabled = true;
             }

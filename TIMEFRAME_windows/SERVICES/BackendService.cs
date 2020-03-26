@@ -119,6 +119,11 @@ namespace TIMEFRAME_windows.SERVICES
                 Logger.Write("--- ADDING NEW PROJECT ---");
 
                 HttpResponseMessage response = await client.PostAsJsonAsync("api/projects", project);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    System.Windows.MessageBox.Show("ERROR:  " + response.StatusCode.ToString() + Environment.NewLine + response.ReasonPhrase, "Adding new Project in database");
+                }
             }
             catch (Exception e)
             {
@@ -127,7 +132,7 @@ namespace TIMEFRAME_windows.SERVICES
             }
         }
         
-        // GET all Customers
+        // GET all Projects
         public async Task<List<Project>> GetProjects()
         {
             List<Project> allProjects = null;
