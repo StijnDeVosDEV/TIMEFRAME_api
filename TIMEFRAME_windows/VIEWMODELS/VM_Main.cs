@@ -25,6 +25,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
         private List<Project> _allprojects_placeholder;
 
         private string _UInotification;
+        private Visibility _LoadingScreen_Visibility;
 
 
         // Record block
@@ -110,6 +111,7 @@ namespace TIMEFRAME_windows.VIEWMODELS
         {
             // Initialization
             UInotification = "";
+            LoadingScreen_Visibility = Visibility.Visible;
 
             // Inject Services
             //InitializeServiceInjections(new BackendService());
@@ -161,6 +163,12 @@ namespace TIMEFRAME_windows.VIEWMODELS
         {
             get { return _UInotification; }
             set { if (value != _UInotification) { _UInotification = value; RaisePropertyChangedEvent("UInotification"); } }
+        }
+
+        public Visibility LoadingScreen_Visibility
+        {
+            get { return _LoadingScreen_Visibility; }
+            set { if (value != _LoadingScreen_Visibility) { _LoadingScreen_Visibility = value; RaisePropertyChangedEvent("LoadingScreen_Visibility"); } }
         }
         #endregion
 
@@ -537,6 +545,10 @@ namespace TIMEFRAME_windows.VIEWMODELS
             // Get all data from database
             allcustomers_placeholder = await myBackendService.GetCustomers();
             allprojects_placeholder = await myBackendService.GetProjects();
+            //alltaskentries_placeholder = await myBackendService.GetTaskEntries();
+            //alltimeentries_placeholder = await myBackendService.GetTimeEntries();
+            ParseTaskEntryData(); // DUMMY CALL
+            ParseTimeEntryData(); // DUMMY CALL
         }
 
         private void ParseCustomerData()
@@ -577,6 +589,55 @@ namespace TIMEFRAME_windows.VIEWMODELS
             }
 
             db_shownProjects = allProjects;
+        }
+
+        private void ParseTaskEntryData()
+        {
+            Logger.Write("PARSING TASK ENTRY DATA:");
+
+            //allProjects.Clear();
+
+            //if (allprojects_placeholder != null && allprojects_placeholder.Count > 0)
+            //{
+            //    foreach (Project project in allprojects_placeholder)
+            //    {
+            //        allProjects.Add(project);
+            //        Logger.Write("- Added:  " + project.Name.ToUpper());
+            //    }
+            //}
+            //else
+            //{
+            //    Logger.Write("allprojects_placeholder = null or does not contain any data!");
+            //    UInotification = "No projects were found in storage!";
+            //}
+
+            //db_shownProjects = allProjects;
+        }
+
+        private void ParseTimeEntryData()
+        {
+            Logger.Write("PARSING TIME ENTRY DATA:");
+
+            //allProjects.Clear();
+
+            //if (allprojects_placeholder != null && allprojects_placeholder.Count > 0)
+            //{
+            //    foreach (Project project in allprojects_placeholder)
+            //    {
+            //        allProjects.Add(project);
+            //        Logger.Write("- Added:  " + project.Name.ToUpper());
+            //    }
+            //}
+            //else
+            //{
+            //    Logger.Write("allprojects_placeholder = null or does not contain any data!");
+            //    UInotification = "No projects were found in storage!";
+            //}
+
+            //db_shownProjects = allProjects;
+
+
+            ToggleLoadingScreen_Visibility();
         }
 
         private enum dataCategory
@@ -661,6 +722,11 @@ namespace TIMEFRAME_windows.VIEWMODELS
                 Logger.Write("!ERROR while trying to update record block data: " + Environment.NewLine +
                     e.ToString());
             }
+        }
+
+        private void ToggleLoadingScreen_Visibility()
+        {
+            LoadingScreen_Visibility = LoadingScreen_Visibility == Visibility.Visible ? Visibility.Hidden : Visibility.Visible;
         }
 
         private void Update_EditSelectionData(dataCategory targetEditView)
@@ -810,13 +876,21 @@ namespace TIMEFRAME_windows.VIEWMODELS
                 // Create new Project
                 Project newProject = new Project()
                 {
-                    //CustomerId = project_addedit_selCustID,
+                    CustomerId = project_addedit_selCustID,
                     Customer = project_addedit_selCust,
                     Name = project_addedit_Name,
                     Description = project_addedit_Description,
                     CreationDate = DateTime.Now,
                     Status = "Active"
                 };
+
+                Logger.Write("PERFORM_ADDPROJECT: " + Environment.NewLine + 
+                    "CustomerId    = " + newProject.CustomerId.ToString() + Environment.NewLine + 
+                    "Customer      = " + newProject.Customer.Name + Environment.NewLine + 
+                    "Name          = " + newProject.Name + Environment.NewLine + 
+                    "Description   = " + newProject.Description + Environment.NewLine + 
+                    "CreationDate  = " + newProject.CreationDate.ToString() + Environment.NewLine + 
+                    "Status        = " + newProject.Status);
 
                 // Update in database
                 await myBackendService.AddProject(newProject);

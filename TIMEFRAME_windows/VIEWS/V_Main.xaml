@@ -309,6 +309,11 @@
         <Grid x:Name="Grid_Notifications" Grid.Row="2" Background="#FF556A80">
             <TextBlock x:Name="TextBlock_Notification" Text="{Binding UInotification}" TextWrapping="Wrap" HorizontalAlignment="Center" FontSize="10" VerticalAlignment="Center" Foreground="White"/>
         </Grid>
+        <Grid x:Name="Grid_Loading" Grid.RowSpan="3" Background="#BF000000" Cursor="Wait" Visibility="{Binding LoadingScreen_Visibility}">
+            <StackPanel x:Name="StackPanel_Content" VerticalAlignment="Center">
+                <Label x:Name="Label_LoadingTitle" Content="Loading your TimeFrame data..." Foreground="White" FontSize="20" FontWeight="Bold" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            </StackPanel>
+        </Grid>
 
     </Grid>
 </Window>
