@@ -59,14 +59,5 @@ namespace TIMEFRAME_windows.Properties {
                 resourceCulture = value;
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to http://localhost:44303/api.
-        /// </summary>
-        internal static string TIMEFRAME_api_URI {
-            get {
-                return ResourceManager.GetString("TIMEFRAME_api_URI", resourceCulture);
-            }
-        }
     }
 }
