@@ -5,8 +5,6 @@ VisualStudioVersion = 16.0.29001.49
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TIMEFRAME_api", "TIMEFRAME_api\TIMEFRAME_api.csproj", "{B1E4EA41-EF20-4F11-BB31-6AD2FAA6E3E3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TIMEFRAME_windows", "TIMEFRAME_windows\TIMEFRAME_windows.csproj", "{09555282-3A8D-41B9-B3CD-54097D3201FF}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,14 +21,6 @@ Global
 		{B1E4EA41-EF20-4F11-BB31-6AD2FAA6E3E3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B1E4EA41-EF20-4F11-BB31-6AD2FAA6E3E3}.Release|x64.ActiveCfg = Release|x64
 		{B1E4EA41-EF20-4F11-BB31-6AD2FAA6E3E3}.Release|x64.Build.0 = Release|x64
-		{09555282-3A8D-41B9-B3CD-54097D3201FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{09555282-3A8D-41B9-B3CD-54097D3201FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{09555282-3A8D-41B9-B3CD-54097D3201FF}.Debug|x64.ActiveCfg = Debug|x64
-		{09555282-3A8D-41B9-B3CD-54097D3201FF}.Debug|x64.Build.0 = Debug|x64
-		{09555282-3A8D-41B9-B3CD-54097D3201FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{09555282-3A8D-41B9-B3CD-54097D3201FF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{09555282-3A8D-41B9-B3CD-54097D3201FF}.Release|x64.ActiveCfg = Release|x64
-		{09555282-3A8D-41B9-B3CD-54097D3201FF}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
