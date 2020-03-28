@@ -26,24 +26,25 @@ namespace TIMEFRAME_api.Controllers
         public async Task<ActionResult<IEnumerable<Customer>>> GetCustomer()
         {
             //return await _context.Customer.Include(c => c.Projects).Include(p => p.TaskEntries).ToListAsync(); // ToListAsync();
-            //return await _context.Customer.ToListAsync();
 
-            List<Customer> myCustomers = new List<Customer>();
+            return await _context.Customer.ToListAsync();
 
-            try
-            {
-                myCustomers = await _context.Customer.Include(c => c.Projects).ThenInclude(p => p.TaskEntries).ToListAsync();
-            }
-            catch (Exception e)
-            {
-                myCustomers.Add(new Customer()
-                {
-                    Name = "ERROR OCCURRED",
-                    Surname = e.ToString()
-                });
-            }
+            //List<Customer> myCustomers = new List<Customer>();
 
-            return myCustomers;
+            //try
+            //{
+            //    myCustomers = await _context.Customer.Include(c => c.Projects).ThenInclude(p => p.TaskEntries).ToListAsync();
+            //}
+            //catch (Exception e)
+            //{
+            //    myCustomers.Add(new Customer()
+            //    {
+            //        Name = "ERROR OCCURRED",
+            //        Surname = e.ToString()
+            //    });
+            //}
+
+            //return myCustomers;
         }
 
         // GET: api/Customers/5

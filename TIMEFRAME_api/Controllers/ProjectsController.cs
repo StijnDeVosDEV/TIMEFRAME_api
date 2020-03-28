@@ -26,6 +26,7 @@ namespace TIMEFRAME_api.Controllers
         public async Task<ActionResult<IEnumerable<Project>>> GetProject()
         {
             return await _context.Project.ToListAsync();
+            //return await _context.Project.Include(p => p.TaskEntries).ToListAsync();
         }
 
         // GET: api/Projects/5
