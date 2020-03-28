@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TIMEFRAME_api.Data;
 
 namespace TIMEFRAME_api.Migrations
 {
     [DbContext(typeof(TimeframeContext))]
-    partial class TimeframeContextModelSnapshot : ModelSnapshot
+    [Migration("20200328104937_FixOneToManyRelationships")]
+    partial class FixOneToManyRelationships
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -31,8 +33,6 @@ namespace TIMEFRAME_api.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<string>("Phone");
-
                     b.Property<string>("Status");
 
                     b.Property<string>("Surname");
@@ -50,7 +50,7 @@ namespace TIMEFRAME_api.Migrations
 
                     b.Property<DateTime>("CreationDate");
 
-                    b.Property<int>("CustomerId");
+                    b.Property<int?>("CustomerId");
 
                     b.Property<string>("Description");
 
@@ -77,7 +77,7 @@ namespace TIMEFRAME_api.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<int>("ProjectId");
+                    b.Property<int?>("ProjectId");
 
                     b.Property<string>("Status");
 
@@ -102,7 +102,7 @@ namespace TIMEFRAME_api.Migrations
 
                     b.Property<DateTime>("Stop");
 
-                    b.Property<int>("TaskEntryId");
+                    b.Property<int?>("TaskEntryId");
 
                     b.HasKey("Id");
 
@@ -115,24 +115,21 @@ namespace TIMEFRAME_api.Migrations
                 {
                     b.HasOne("TIMEFRAME_api.MODELS.Customer", "Customer")
                         .WithMany("Projects")
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("CustomerId");
                 });
 
             modelBuilder.Entity("TIMEFRAME_api.MODELS.TaskEntry", b =>
                 {
                     b.HasOne("TIMEFRAME_api.MODELS.Project", "Project")
                         .WithMany("TaskEntries")
-                        .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("ProjectId");
                 });
 
             modelBuilder.Entity("TIMEFRAME_api.MODELS.TimeEntry", b =>
                 {
                     b.HasOne("TIMEFRAME_api.MODELS.TaskEntry", "TaskEntry")
                         .WithMany("TimeEntries")
-                        .HasForeignKey("TaskEntryId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("TaskEntryId");
                 });
 #pragma warning restore 612, 618
         }

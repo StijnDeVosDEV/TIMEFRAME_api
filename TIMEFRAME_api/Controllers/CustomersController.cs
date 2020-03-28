@@ -25,15 +25,25 @@ namespace TIMEFRAME_api.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Customer>>> GetCustomer()
         {
-            return await _context.Customer.ToListAsync();
-            //return new List<Customer>(){new Customer()
-            //{
-            //    Id = 1,
-            //    Name = "DUMMY CUSTOMER",
-            //    Email = "test@test.com",
-            //    Status = "Inactive",
-            //    Surname= "Test"
-            //} };
+            //return await _context.Customer.Include(c => c.Projects).Include(p => p.TaskEntries).ToListAsync(); // ToListAsync();
+            //return await _context.Customer.ToListAsync();
+
+            List<Customer> myCustomers = new List<Customer>();
+
+            try
+            {
+                myCustomers = await _context.Customer.Include(c => c.Projects).ThenInclude(p => p.TaskEntries).ToListAsync();
+            }
+            catch (Exception e)
+            {
+                myCustomers.Add(new Customer()
+                {
+                    Name = "ERROR OCCURRED",
+                    Surname = e.ToString()
+                });
+            }
+
+            return myCustomers;
         }
 
         // GET: api/Customers/5

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TIMEFRAME_api.Data;
 
 namespace TIMEFRAME_api.Migrations
 {
     [DbContext(typeof(TimeframeContext))]
-    partial class TimeframeContextModelSnapshot : ModelSnapshot
+    [Migration("20200328130925_AdaptModelsAgainToIncludeIDasNavigationProperties")]
+    partial class AdaptModelsAgainToIncludeIDasNavigationProperties
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,8 +32,6 @@ namespace TIMEFRAME_api.Migrations
                     b.Property<string>("Email");
 
                     b.Property<string>("Name");
-
-                    b.Property<string>("Phone");
 
                     b.Property<string>("Status");
 
