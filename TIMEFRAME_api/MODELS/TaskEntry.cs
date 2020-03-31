@@ -15,7 +15,7 @@ namespace TIMEFRAME_api.MODELS
         public string Description { get; set; }
         public DateTime CreationDate { get; set; }
         public string Status { get; set; }
-
+         
         // Relationships
         public int ProjectId { get; set; }
         public Project Project { get; set; }
