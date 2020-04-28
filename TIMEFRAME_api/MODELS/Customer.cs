@@ -17,6 +17,7 @@ namespace TIMEFRAME_api.MODELS
         public string Phone { get; set; }
         public DateTime CreationDate { get; set; }
         public string Status { get; set; }
+        public string UserID { get; set; }
 
         // Relationships
         public ICollection<Project> Projects { get; set; }
